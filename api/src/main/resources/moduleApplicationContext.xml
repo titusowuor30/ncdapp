@@ -23,6 +23,8 @@
   		    http://www.springframework.org/schema/util
   		    http://www.springframework.org/schema/util/spring-util-3.0.xsd">
 
+
+
     <context:component-scan base-package="org.openmrs.module.ncdapp" />
 
     <!-- Wraps NcdappService methods in DB transactions and OpenMRS interceptors,
@@ -55,4 +57,32 @@
             </list>
         </property>
     </bean>
+
+    <!-- ===================== Configurations ===================== -->
+
+    <bean id="ncdapp.config.form" class="org.openmrs.module.kenyacore.form.FormConfiguration">
+        <property name="commonVisitForms">
+            <set>
+                <ref bean="ncdapp.form.ncdscreening"/>
+            </set>
+        </property>
+    </bean>
+
+    <!-- NCD assessment form -->
+    <bean id="ncdapp.form.ncdscreening" class="org.openmrs.module.kenyacore.form.FormDescriptor">
+        <property name="targetUuid" value="2e19c856-e420-11ed-b5ea-0242ac120002" />
+        <property name="apps">
+            <set>
+                <ref bean="kenyaemr.app.clinician" />
+                <ref bean="kenyaemr.app.chart" />
+                <ref bean="kenyaemr.app.intake" />
+
+            </set>
+        </property>
+        <property name="icon" value="kenyaui:forms/generic.png" />
+        <property name="htmlform" value="ncdapp:ncdscreening.html" />
+    </bean>
+
+
+
 </beans>
