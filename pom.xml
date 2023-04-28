@@ -133,25 +133,12 @@
 				<scope>provided</scope>
 			</dependency>
 
-			<dependency>
-				<groupId>org.openmrs.module</groupId>
-				<artifactId>kenyacore-api</artifactId>
-				<version>${kenyacoreVersion}</version>
-				<scope>provided</scope>
-			</dependency>
 
 			<dependency>
 				<groupId>org.openmrs.module</groupId>
 				<artifactId>kenyacore-test</artifactId>
 				<version>${kenyacoreVersion}</version>
 				<scope>test</scope>
-			</dependency>
-
-			<dependency>
-				<groupId>org.openmrs.module</groupId>
-				<artifactId>kenyaui-api</artifactId>
-				<version>${kenyauiVersion}</version>
-				<scope>provided</scope>
 			</dependency>
 
 			<dependency>

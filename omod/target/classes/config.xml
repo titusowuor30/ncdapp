@@ -4,12 +4,12 @@
 	
 	<!-- Base Module Properties -->
 	<id>ncdapp</id>
-	<name>${project.parent.name}</name>
-	<version>${project.parent.version}</version>
+	<name>Ncdapp</name>
+	<version>1.4.0</version>
 	<package>org.openmrs.module.ncdapp</package>
 	<author>rajab</author>
 	<description>
-			${project.parent.description}
+			Omod project for NCD module
 	</description>
 
 	<activator>org.openmrs.module.ncdapp.NcdappActivator</activator>
