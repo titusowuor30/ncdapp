@@ -1,6 +1,13 @@
+org/openmrs/module/ncdapp/metadata/NcdSecurityMetadata.class
+org/openmrs/module/ncdapp/api/impl/NcdappServiceImpl.class
+org/openmrs/module/ncdapp/metadata/NcdSecurityMetadata$_Role.class
+org/openmrs/module/ncdapp/metadata/NcdMetadata$_EncounterType.class
+org/openmrs/module/ncdapp/api/dao/NcdappDao.class
 org/openmrs/module/ncdapp/api/NcdappService.class
 org/openmrs/module/ncdapp/Item.class
-org/openmrs/module/ncdapp/api/impl/NcdappServiceImpl.class
+org/openmrs/module/ncdapp/metadata/NcdMetadata$_Form.class
+org/openmrs/module/ncdapp/metadata/NcdMetadata.class
 org/openmrs/module/ncdapp/NcdappActivator.class
+org/openmrs/module/ncdapp/metadata/NcdSecurityMetadata$_Privilege.class
 org/openmrs/module/ncdapp/NcdappConfig.class
-org/openmrs/module/ncdapp/api/dao/NcdappDao.class
+org/openmrs/module/ncdapp/moduleConstants.class

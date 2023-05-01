@@ -14,14 +14,19 @@
 
 	<dependencies>
 
+	<dependency>
+		<groupId>org.openmrs.module</groupId>
+		<artifactId>ncdapp-api</artifactId>
+		<version>1.4.0</version>
+	</dependency>
+
+	<dependency>
+		<groupId>${project.parent.groupId}</groupId>
+		<artifactId>${project.parent.artifactId}-api</artifactId>
+		<version>${project.parent.version}</version>
+	</dependency>
+
 		<!-- Begin OpenMRS modules -->
-
-		<dependency>
-			<groupId>${project.parent.groupId}</groupId>
-			<artifactId>${project.parent.artifactId}-api</artifactId>
-			<version>${project.parent.version}</version>
-		</dependency>
-
 		<dependency>
 			<groupId>org.openmrs.module</groupId>
 			<artifactId>legacyui-omod</artifactId>
@@ -30,6 +35,33 @@
 		<dependency>
 			<groupId>org.openmrs.module</groupId>
 			<artifactId>uiframework-api</artifactId>
+		</dependency>
+
+
+
+		<dependency>
+			<groupId>org.openmrs.module</groupId>
+			<artifactId>kenyaui-api</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.openmrs.module</groupId>
+			<artifactId>metadatadeploy-api</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.openmrs.module</groupId>
+			<artifactId>metadatasharing-api</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.openmrs.module</groupId>
+			<artifactId>idgen-api</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.openmrs.module</groupId>
+			<artifactId>kenyacore-api</artifactId>
 		</dependency>
 
 		<!-- End OpenMRS modules -->

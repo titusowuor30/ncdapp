@@ -76,11 +76,21 @@
                 <ref bean="kenyaemr.app.clinician" />
                 <ref bean="kenyaemr.app.chart" />
                 <ref bean="kenyaemr.app.intake" />
+                <ref bean="ncd.app.providerHome" />
 
             </set>
         </property>
+
         <property name="icon" value="kenyaui:forms/generic.png" />
         <property name="htmlform" value="ncdapp:ncdscreening.html" />
+    </bean>
+
+    <bean id="ncd.app.providerHome" factory-bean="kenyacore.appFactoryBean" factory-method="createInstance">
+        <constructor-arg value="ncd.app.home" />
+        <constructor-arg value="Ncd" />
+        <constructor-arg value="ncd/ncdHome.page" />
+        <constructor-arg value="ncd:apps/non_communicable_diseases.png" />
+        <constructor-arg value="2001" />
     </bean>
 
 
