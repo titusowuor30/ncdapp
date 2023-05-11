@@ -32,8 +32,7 @@ public class NcdSecurityMetadata extends AbstractMetadataBundle {
 	public void install() {
 		
 		install(privilege(_Privilege.APP_NCD_ADMIN, "Able to assess ncd for a patient"));
-		install(role(_Role.APPLICATION_NCD_ADMIN, "Can access ncd app",
-				idSet(_Role.API_PRIVILEGES_VIEW_AND_EDIT),
-		        idSet(_Privilege.APP_NCD_ADMIN)));
+		install(role(_Role.APPLICATION_NCD_ADMIN, "Can access ncd app", idSet(_Role.API_PRIVILEGES_VIEW_AND_EDIT),
+		    idSet(_Privilege.APP_NCD_ADMIN)));
 	}
 }

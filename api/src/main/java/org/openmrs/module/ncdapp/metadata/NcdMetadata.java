@@ -37,7 +37,7 @@ public class NcdMetadata extends AbstractMetadataBundle {
 	}
 	
 	@Override
-	public void install()  {
+	public void install() {
 		
 		install(encounterType("NCD Assessment Encounter",
 		    "A visit encounter that provides assessment questions for ncd conditions and treatment",

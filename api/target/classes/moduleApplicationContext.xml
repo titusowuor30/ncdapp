@@ -89,7 +89,7 @@
         <constructor-arg value="ncd.app.home" />
         <constructor-arg value="Ncd" />
         <constructor-arg value="ncd/ncdHome.page" />
-        <constructor-arg value="ncd:apps/non_communicable_diseases.png" />
+        <constructor-arg value="ncdapp:apps/non_communicable_diseases.png" />
         <constructor-arg value="2001" />
     </bean>
 

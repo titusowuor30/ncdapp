@@ -1,5 +1,0 @@
-#surefire_0
-#Mon May 01 23:34:35 EAT 2023
-maven.test.failure.ignore=true
-localRepository=/home/rajab/.m2/repository
-basedir=/home/rajab/ncdapp/omod

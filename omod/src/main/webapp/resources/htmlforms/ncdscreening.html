@@ -14,196 +14,129 @@
   ~ Copyright (C) OpenMRS, LLC.  All Rights Reserved.
   -->
 <htmlform>
+    <body style="background-color:#cbf5dd;">
+
     <script type="text/javascript" src="../moduleResources/kenyaemr/scripts/moment.js"></script>
     <script type="text/javascript">
-        var POST_TX_COMPLICATION_CONCEPT_ID = 165382;
-        var SCREENING_METHOD_CONCEPT_ID = 163589;
-        var VIA_CONCEPT_ID = 164805;
-        var VILI_CONCEPT_ID = 164977;
-        var PAP_SMEAR_CONCEPT_ID = 885;
-        var HPV_TEST_CONCEPT_ID = 159859;
-        var COLPOSCOPY = 160705;
-        var YES_CONCEPT_ID = 1065
+        var DM/HTN_SCREENING_METHOD_CONCEPT_ID = 167541;
+        var BLOOD_PRESSURE_CONCEPT_ID = 163377;
+        var RBS_CONCEPT_ID = 887;
+        var FBS_CONCEPT_ID = 160912;
+        var YES_CONCEPT_ID = 1065;
+        Var NO_CONCEPT_ID = 1066;
+        Var HAS_HEALTH_INSURANCE = 167538
 
 	jq(function() {
-		jq("#tr_via_screening_result").hide();
-		jq("#tr_vili_screening_result").hide();
-        jq("#tr_colposcopy_screening_result").hide();
-		jq("#tr_pap_smear_screening_result").hide();
-		jq("#tr_hpv_screening_result").hide();
-        jq("#tr_post_tx_complication").hide();
-        jq("#tbl-other-tx-complication").hide();
-        jq("#tbl-other-treatment").hide();
-        jq("#t_referred_out").hide();
+		jq("#tr_blood_pressure_screening_result").hide();
+		jq("#tr_rbs_screening_result").hide();
+        jq("#tr_fbs_screening_result").hide();
+        jq("#tbl-chronic-illness").hide();
+        jq('#chronic-illness :input[type=radio]').change(chronicIllnessesSelected);
         jq("#visit_type select").change(onVisitTypeSelected);
         jq('#screening_method select').change(screeningMethodSelected);
-        jq('#post_tx_complication select').change(postTxComplicationsSelected);
-        jq('#treatment select').change(otherTreatmentSelected);
-        jq('#referred_out :input[type=radio]').change(onReferralSelected);
+        jq("#tca-date input[type=text]").prop("disabled",true);
+        jq("#reason-tca-date input[type=radio]").prop("disabled",true);
+        jq('#tca-given :input[type=radio]').change(tcaGivenSelected);
         // Options for selected screening methods
-        jq('#via_screening_result select').change(viaMethodSelected);
-        jq('#vili_screening_result select').change(viliMethodSelected);
-        jq('#colposcopy_screening_result select').change(colMethodSelected);
-        jq('#pap_smear_screening_result select').change(papMethodSelected);
-        jq('#hpv_screening_result select').change(hpvMethodSelected);
+        jq('#blood_pressure_screening_result select').change(viaMethodSelected);
+        jq('#rbs_screening_result select').change(rbsMethodSelected);
+        jq('#fbs_screening_result select').change(fbsMethodSelected);
 
 
 	});
 
-    var onVisitTypeSelected  = function () {
-        var visitType = getValue("visit_type.value");
-        if (visitType == 165382 || visitType == "") {
-            jq("#tr_post_tx_complication").show();
-        } else {
-            jq("#tr_post_tx_complication").hide();
-        }
-    }
-
-    var postTxComplicationsSelected  = function () {
-        var complicationType = getValue("post_tx_complication.value");
-        if (complicationType == 5622) {
-            jq("#tbl-other-tx-complication").show();
-        } else {
-            jq("#tbl-other-tx-complication").hide();
-        }
-    }
-    var otherTreatmentSelected  = function () {
-        var treatmentType = getValue("treatment.value");
-        if (treatmentType == 5622) {
-            jq("#tbl-other-treatment").show();
-        } else {
-            jq("#tbl-other-treatment").hide();
-        }
-    }
-
-    var onReferralSelected  = function () {
-        var refferedOut = getValue("referred_out.value");
-        if (refferedOut == 1065) {
-            jq("#t_referred_out").show();
-        } else {
-            jq("#t_referred_out").hide();
-        }
-    }
-
     var screeningMethodSelected = function(){
         var val = getValue("screening_method.value");
-        if(val == 164805){
-            jq("#tr_via_screening_result").show();
+        if(val == 163377){
+            jq("#tr_blood_pressure_screening_result").show();
 
-            jq("#tr_vili_screening_result").hide();
-            jq("#tr_colposcopy_screening_result").hide();
-            jq("#tr_pap_smear_screening_result").hide();
-            jq("#tr_hpv_screening_result").hide();
+            jq("#tr_rbs_screening_result").hide();
+            jq("#tr_fbs_screening_result").hide();
         }
-        if(val == 164977){
-            jq("#tr_vili_screening_result").show();
-            jq("#tr_via_screening_result").hide();
-            jq("#tr_colposcopy_screening_result").hide();
-            jq("#tr_pap_smear_screening_result").hide();
-            jq("#tr_hpv_screening_result").hide();
+        if(val == 887){
+            jq("#tr_rbs_screening_result").show();
+            jq("#tr_blood_pressure_screening_result").hide();
+            jq("#tr_fbs_screening_result").hide();
         }
         if(val == 160705){
-            jq("#tr_colposcopy_screening_result").show();
-            jq("#tr_pap_smear_screening_result").hide();
-            jq("#tr_via_screening_result").hide();
-            jq("#tr_vili_screening_result").hide();
-            jq("#tr_hpv_screening_result").hide();
+            jq("#tr_fbs_screening_result").show();
+            jq("#tr_blood_pressure_screening_result").hide();
+            jq("#tr_rbs_screening_result").hide();
         }
-        if(val == 885){
-            jq("#tr_pap_smear_screening_result").show();
-            jq("#tr_via_screening_result").hide();
-            jq("#tr_vili_screening_result").hide();
-            jq("#tr_colposcopy_screening_result").hide();
-            jq("#tr_hpv_screening_result").hide();
-        }
-        if(val == 159859){
-            jq("#tr_hpv_screening_result").show();
-            jq("#tr_via_screening_result").hide();
-            jq("#tr_vili_screening_result").hide();
-            jq("#tr_colposcopy_screening_result").hide();
-            jq("#tr_pap_smear_screening_result").hide();
 
-        }
       }
-        var viaMethodSelected = function(){
-            var val = getValue("via_screening_result.value");
-            if(val == 664){
-                getField('treatment.value').prop("selectedIndex", 10);
-            }else{
-                getField('treatment.value').prop("selectedIndex", 0);
-			}
-        }
 
-        var viliMethodSelected = function(){
-            var val = getValue("vili_screening_result.value");
-            if(val == 664){
-                getField('treatment.value').prop("selectedIndex", 10);
-            }else{
-                getField('treatment.value').prop("selectedIndex", 0);
+            var chronicIllnessesSelected = function() {
+            var val = getValue('chronic-illness.value');
+            var illness = jq('.illness-chronic select').val('');
+            var onset = jq('.onset-date-chronic-illness input').val('');
+            var drug = jq('.drug-chronic-illness input').val('');
+            var dose = jq('.dose-chronic-illness input').val('');
+            var units = jq('.units-chronic-illness input').val('');
+            var frequency = jq('.frequency-chronic-illness select').val('');
+            var duration = jq('.duration-chronic-illness input').val('');
+            var durationUnits = jq('.duration-units-illness select').val('');
+            if (val == "false" || val == 1066){
+                jq("#tbl-chronic-illness").hide();
+                clearHiddenSections([illness, onset, drug, dose, units, frequency, duration, durationUnits]);
+                getField('chronic.error').html('Please specify the chronic illness.').hide();
+            }else {
+                jq("#tbl-chronic-illness").show();
             }
         }
+        function tcaGivenSelected() {
+            var val = jq(this).val();
+            var tcaDate = jq('#tca-date');
+            var reasonTcaDate = jq('#reason-tca-date');
 
-        var colMethodSelected = function(){
-            var val = getValue("colposcopy_screening_result.value");
-            if(val == 1115){
-                getField('treatment.value').prop("selectedIndex", 10);
+            if(val == 1065) {
+                jq("#tca-date input").prop("disabled", false);
+                jq("#reason-tca-date input[type=radio]").prop("disabled", true);
+                clearHiddenSections([reasonTcaDate]);
             }else{
-                getField('treatment.value').prop("selectedIndex", 0);
-            }
-        }
-
-        var papMethodSelected = function(){
-            var val = getValue("pap_smear_screening_result.value");
-            if(val == 1115){
-                getField('treatment.value').prop("selectedIndex", 10);
-            }else{
-                getField('treatment.value').prop("selectedIndex", 0);
-            }
-        }
-
-        var hpvMethodSelected = function(){
-            var val = getValue("hpv_screening_result.value");
-            if(val == 664){
-                getField('treatment.value').prop("selectedIndex", 10);
-            }else{
-                getField('treatment.value').prop("selectedIndex", 0);
+                jq("#tca-date input").prop("disabled",true);
+                jq("#reason-tca-date input[type=radio]").prop("disabled",false);
+                clearHiddenSections([tcaDate]);
             }
         }
 
     beforeSubmit.push(function() {
+        var tca_date = getValue('tca-date.value');
+                if (tca_date == ""  &amp;&amp;(getValue('tca-given.value') == 1065)) {
+                    getField('tca-date.error').html('Please specify next appointment date.').show();
+                    return false;
+                }else{
+                    getField('tca-date.error').html('Please specify next appointment date.').hide();
+                }
+
+                if ((getValue('tca-given.value') == 1066 &amp;&amp;(getValue('reason-tca-date.value') == ""))) {
+                    getField('reason-tca-date.error').html('Please specify reason for not giving next appointment date.').show();
+                    return false;
+                }else{
+                    getField('reason-tca-date.error').html('Please specify reason for not giving next appointment date.').hide();
+                }
+
         var screeningMethod = getValue("screening_method.value");
 
-        if (screeningMethod == VIA_CONCEPT_ID &amp;&amp; getValue("via_screening_result.value") == '') {
-            getField("via_screening_result.error").html("Required field").show();
+        if (screeningMethod == BLOOD_PRESSURE_CONCEPT_ID &amp;&amp; getValue("blood_pressure_screening_result.value") == '') {
+            getField("blood_pressure_screening_result.error").html("Required field").show();
             return false;
         }else{
-            getField("via_screening_result.error").html("Required field").hide();
+            getField("blood_pressure_screening_result.error").html("Required field").hide();
         }
-        if (screeningMethod == VILI_CONCEPT_ID &amp;&amp; getValue("vili_screening_result.value") == '') {
-            getField("vili_screening_result.error").html("Required field").show();
+        if (screeningMethod == RBS_CONCEPT_ID &amp;&amp; getValue("rbs_screening_result.value") == '') {
+            getField("rbs_screening_result.error").html("Required field").show();
             return false;
         }else{
-            getField("vili_screening_result.error").html("Required field").hide();
-        }
-
-        if (screeningMethod == PAP_SMEAR_CONCEPT_ID &amp;&amp; getValue("pap_smear_screening_result.value") == '') {
-            getField("pap_smear_screening_result.error").html("Required field").show();
-            return false;
-        }else{
-            getField("pap_smear_screening_result.error").html("Required field").hide();
+            getField("rbs_screening_result.error").html("Required field").hide();
         }
 
-        if (screeningMethod == HPV_TEST_CONCEPT_ID &amp;&amp; getValue("hpv_screening_result.value") == '') {
-            getField("hpv_screening_result.error").html("Required field").show();
+
+        if (screeningMethod == FBS_CONCEPT_ID &amp;&amp; getValue("fbs_screening_result.value") == '') {
+            getField("fbs_screening_result.error").html("Required field").show();
             return false;
         }else{
-            getField("hpv_screening_result.error").html("Required field").hide();
-        }
-        if (screeningMethod == COLPOSCOPY &amp;&amp; getValue("colposcopy_screening_result.value") == '') {
-            getField("colposcopy_screening_result.error").html("Required field").show();
-            return false;
-        }else{
-            getField("colposcopy_screening_result.error").html("Required field").hide();
+            getField("fbs_screening_result.error").html("Required field").hide();
         }
         return true;
     })
@@ -216,88 +149,54 @@
 			jq(function(){
 
 			jq('#screening_method select').change(screeningMethodSelected);
-			jq('#referred_out :input[type=radio]').change(referredOutChange);
-
 			var GREENCARD_VELOCITY = "<lookup expression="kenyaemr.GreenCardVelocityCalculation()" />";
-			var CACx_Result = GREENCARD_VELOCITY.split(",")[14].split(":")[1];
-			var SCREENING_RESULT = CACx_Result.replace(/[^\d]/g, '');
 
+			function displayRecentBmi() {
+            var weightKg = "<lookup expression="fn.latestObs(5089).valueNumeric"/>"
+            var heightM = ("<lookup expression="fn.latestObs(5090).valueNumeric"/>")/100
+            var bmi = '';
+            var recent_bmi ='';
+            var pAge = parseInt('<lookup expression="patient.age"/>');
+            //If client is > 19 years prepopluate height
+            if (pAge &gt; 19 &amp;&amp; heightM !="" ) {
+                getField('height.value').val(heightM*100);
+            }else{
+                getField('height.value').val("");
+            }
+
+            if (weightKg != "" &amp;&amp; heightM !="") {
+                if (!isNaN(weightKg) &amp;&amp; !isNaN(heightM)) {
+                    bmi = weightKg / (heightM * heightM);
+                    recent_bmi = bmi.toFixed(2);
+                    jq('#recent-calculated-bmi').html(recent_bmi);
+                }
+            }else{
+                jq('#recent-calculated-bmi').html("");
+            }
+        }
 				var val = getValue("screening_method.value");
 
-				if(val == 164805){
-					jq("#tr_via_screening_result").show();
-					jq("#tr_vili_screening_result").hide();
-					jq("#tr_colposcopy_screening_result").hide();
-					jq("#tr_pap_smear_screening_result").hide();
-					jq("#tr_hpv_screening_result").hide();
-
-					getField('via_screening_result.value').val(SCREENING_RESULT);
+				if(val == 163377){
+					jq("#tr_blood_pressure_screening_result").show();
+					jq("#tr_rbs_screening_result").hide();
+					jq("#tr_fbs_screening_result").hide();
+					getField('blood_pressure_screening_result.value').val(SCREENING_RESULT);
 				}
-				if(val == 164977){
-					jq("#tr_vili_screening_result").show();
-					jq("#tr_via_screening_result").hide();
-					jq("#tr_colposcopy_screening_result").hide();
-					jq("#tr_pap_smear_screening_result").hide();
-					jq("#tr_hpv_screening_result").hide();
+				if(val == 887){
+					jq("#tr_rbs_screening_result").show();
+					jq("#tr_blood_pressure_screening_result").hide();
+					jq("#tr_fbs_screening_result").hide();
 
-					getField('vili_screening_result.value').val(SCREENING_RESULT);
+					getField('rbs_screening_result.value').val(SCREENING_RESULT);
 				}
 				if(val == 160705){
-					jq("#tr_colposcopy_screening_result").show();
-					jq("#tr_pap_smear_screening_result").hide();
-					jq("#tr_via_screening_result").hide();
-					jq("#tr_vili_screening_result").hide();
-					jq("#tr_hpv_screening_result").hide();
+					jq("#tr_fbs_screening_result").show();
+					jq("#tr_blood_pressure_screening_result").hide();
+					jq("#tr_rbs_screening_result").hide();
 
-					getField('colposcopy_screening_result.value').val(SCREENING_RESULT);
-				}
-				if(val == 885){
-					jq("#tr_pap_smear_screening_result").show();
-					jq("#tr_via_screening_result").hide();
-					jq("#tr_vili_screening_result").hide();
-					jq("#tr_colposcopy_screening_result").hide();
-					jq("#tr_hpv_screening_result").hide();
-
-					getField('pap_smear_screening_result.value').val(SCREENING_RESULT);
-				}
-				if(val == 159859){
-					jq("#tr_hpv_screening_result").show();
-					jq("#tr_via_screening_result").hide();
-					jq("#tr_vili_screening_result").hide();
-					jq("#tr_colposcopy_screening_result").hide();
-					jq("#tr_pap_smear_screening_result").hide();
-
-					getField('hpv_screening_result.value').val(SCREENING_RESULT);
-
+					getField('fbs_screening_result.value').val(SCREENING_RESULT);
 				}
 
-				var visitType = getValue("visit_type.value");
-				if (visitType == 165382 || visitType == "") {
-					jq("#tr_post_tx_complication").show();
-				} else {
-					jq("#tr_post_tx_complication").hide();
-				}
-
-				var complicationType = getValue("post_tx_complication.value");
-				if (complicationType == 5622) {
-					jq("#tbl-other-tx-complication").show();
-				} else {
-					jq("#tbl-other-tx-complication").hide();
-				}
-
-				var treatmentType = getValue("treatment.value");
-				if (treatmentType == 5622) {
-					jq("#tbl-other-treatment").show();
-				} else {
-					jq("#tbl-other-treatment").hide();
-				}
-
-				var refferedOut = getValue("referred_out.value");
-				if (refferedOut == 1065) {
-					jq("#t_referred_out").show();
-				} else {
-					jq("#t_referred_out").hide();
-				}
 
 			});
 
@@ -306,93 +205,39 @@
 
 				if(val == 164805){
 
-					jq("#tr_via_screening_result").show();
-					jq("#tr_vili_screening_result").hide();
-					jq("#tr_colposcopy_screening_result").hide();
-					jq("#tr_pap_smear_screening_result").hide();
-					jq("#tr_hpv_screening_result").hide();
+					jq("#tr_blood_sugar_screening_result").show();
+					jq("#tr_rbs_screening_result").hide();
+					jq("#tr_fbs_screening_result").hide();
 
-					clearHiddenSections(jq('#via_screening_result'));
-					clearHiddenSections(jq('#vili_screening_result'));
-					clearHiddenSections(jq('#colposcopy_screening_result'));
-					clearHiddenSections(jq('#pap_smear_screening_result'));
-					clearHiddenSections(jq('#treatment'));
-					clearHiddenSections(jq('#other-tx'));
+					clearHiddenSections(jq('#blood_sugar_screening_result'));
+					clearHiddenSections(jq('#rbs_screening_result'));
+					clearHiddenSections(jq('#fbs_screening_result'));
 				}
 
 				if(val == 164977){
 
-					jq("#tr_vili_screening_result").show();
-					jq("#tr_via_screening_result").hide();
-					jq("#tr_colposcopy_screening_result").hide();
-					jq("#tr_pap_smear_screening_result").hide();
-					jq("#tr_hpv_screening_result").hide();
+					jq("#tr_rbs_screening_result").show();
+					jq("#tr_blood_pressure_screening_result").hide();
+					jq("#tr_fbs_screening_result").hide();
 
-					clearHiddenSections(jq('#via_screening_result'));
-					clearHiddenSections(jq('#vili_screening_result'));
-					clearHiddenSections(jq('#colposcopy_screening_result'));
-					clearHiddenSections(jq('#pap_smear_screening_result'));
-					clearHiddenSections(jq('#treatment'));
-					clearHiddenSections(jq('#other-tx'));
+					clearHiddenSections(jq('#blood_pressure_screening_result'));
+					clearHiddenSections(jq('#rbs_screening_result'));
+					clearHiddenSections(jq('#fbs_screening_result'));
 				}
 
 				if(val == 160705){
 
-					jq("#tr_colposcopy_screening_result").show();
-					jq("#tr_pap_smear_screening_result").hide();
-					jq("#tr_via_screening_result").hide();
-					jq("#tr_vili_screening_result").hide();
-					jq("#tr_hpv_screening_result").hide();
+					jq("#tr_fbs_screening_result").show();
+					jq("#tr_blood_pressure_screening_result").hide();
+					jq("#tr_rbs_screening_result").hide();
 
-					clearHiddenSections(jq('#via_screening_result'));
-					clearHiddenSections(jq('#vili_screening_result'));
-					clearHiddenSections(jq('#colposcopy_screening_result'));
-					clearHiddenSections(jq('#pap_smear_screening_result'));
-					clearHiddenSections(jq('#treatment'));
-					clearHiddenSections(jq('#other-tx'));
+					clearHiddenSections(jq('#blood_pressure_screening_result'));
+					clearHiddenSections(jq('#rbs_screening_result'));
+					clearHiddenSections(jq('#fbs_screening_result'));
 				}
 
-				 if(val == 885){
 
-					jq("#tr_pap_smear_screening_result").show();
-					jq("#tr_via_screening_result").hide();
-					jq("#tr_vili_screening_result").hide();
-					jq("#tr_colposcopy_screening_result").hide();
-					jq("#tr_hpv_screening_result").hide();
 
-					clearHiddenSections(jq('#via_screening_result'));
-					clearHiddenSections(jq('#vili_screening_result'));
-					clearHiddenSections(jq('#colposcopy_screening_result'));
-					clearHiddenSections(jq('#pap_smear_screening_result'));
-					clearHiddenSections(jq('#treatment'));
-					clearHiddenSections(jq('#other-tx'));
-				 }
-
-				 if(val == 159859){
-
-					jq("#tr_hpv_screening_result").show();
-					jq("#tr_via_screening_result").hide();
-					jq("#tr_vili_screening_result").hide();
-					jq("#tr_colposcopy_screening_result").hide();
-					jq("#tr_pap_smear_screening_result").hide();
-
-					clearHiddenSections(jq('#via_screening_result'));
-					clearHiddenSections(jq('#vili_screening_result'));
-					clearHiddenSections(jq('#colposcopy_screening_result'));
-					clearHiddenSections(jq('#pap_smear_screening_result'));
-					clearHiddenSections(jq('#treatment'));
-					clearHiddenSections(jq('#other-tx'));
-				 }
-			}
-
-			var referredOutChange = function(){
-				var val = getValue("referred_out.value");
-
-				if(val == 1066) {
-					clearHiddenSections(jq('#referred_to'));
-					clearHiddenSections(jq('#referral_reason'));
-				}
-			}
 
 			//Clear hidden sections
 			clearHiddenSections = function(parentObj) {
@@ -465,99 +310,154 @@
             </legend>
             <table class="simple-table" style="width: 100%">
                 <tr>
-                    <td style="width: 25%;"> Visit type: </td>
-                    <td style="width: 25%;">
-                        <obs id="visit_type" conceptId="160288AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-                             answerConceptIds="162080AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,161236AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,1185AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-                             answerLabels="Initial visit,Routine visit,Treatment visit"
-                             style="dropdown" required="true" />
+                    <table class="right-aligned-first" style="width: 100%;" border="0">
+                    <td>Patient covered by NHIF</td>
+                        <td>
+                        <obs id="HAS_HEALTH_INSURANCE" conceptId="167538"
+                             answerConceptIds="1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+                             answerLabels="Yes, No" style="radio"/>
                     </td>
-                    <td style="width: 50%;">
-                        <table class="right-aligned-first" style="width: 100%;" border="0">
-                            <obsgroup groupingConceptId="374AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA">
-                                <tr id="tr_screening_type">
-                                    <td>
-                                        Known Status
-                                    </td>
-                                    <td colspan="3">
-                                        <div style="float: left; padding-right: 50px">
-                                            <obs conceptId="374AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" answerConceptId="1107AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" answerLabel="Hypertensive" style="checkbox" /><br />
-                                            <obs conceptId="374AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" answerConceptId="136443AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" answerLabel="Hypertension on Treatment" style="checkbox" /><br />
-                                            <obs conceptId="374AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" answerConceptId="460AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" answerLabel="Diabetic" style="checkbox" /><br />
-                                            <obs conceptId="374AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" answerConceptId="5334AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" answerLabel="Diabetic on treatment" style="checkbox" /><br />
-                                            <obs conceptId="374AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" answerConceptId="5245AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" answerLabel="New on Hypertension" style="checkbox" /><br />
-                                            <obs conceptId="374AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" answerConceptId="5245AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" answerLabel="New on Diabetes" style="checkbox" /><br />
+                    <td> Is your payment upto date</td>
+                    <td>
+                        <obs id="Card_Active" conceptId="167539"
+                             answerConceptIds="1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+                             answerLabels="Yes, No" style="radio" />
+                    </td>
 
-                                        </div>
-                                    </td>
-                                </tr>
-                            </obsgroup>
-                            <tr id="tr_post_tx_complication">
-                                <td>
-                                    Post treatment complication cause
+                                <td>NHIF Number</td>
+                                <td>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                                    <span id="nhif-id"><patient id="nhif" field="identifier" identifierTypeId="09ebf4f9-b673-4d97-b39b-04f94088ba64" required="false" /></span>
+
                                 </td>
+                <td>Other Health Insurance</td>
+                <td>
+                    <obs id="medical-cover" conceptId="9c266acb-bdda-4e54-aacf-9e98a59696d8" cols="20"/>
+                </td>
+                    </table>
+
+                </tr>
+
+                <fieldset>
+                    <legend>Vital Signs</legend>
+                    <table>
+                        <tr>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+
+                            <th>Recent</th>
+                        </tr>
+                        <tr>
+                            <td>Temp</td>
+                            <td>
+                                <recentObs conceptId="5088AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>BP</td>
+                            <td>
+                                <recentObs conceptId="5085AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"/>
+                                /
+                                <recentObs conceptId="5086AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"/>
+                            </td>
+                        </tr>
+                    </table>
+                </fieldset>
+                <fieldset>
+                    <legend>Other Recordings</legend>
+                    <td colspan="6">
+                        <table>
+                            <tr>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th>Recent</th>
+                            </tr>
+                            <tr>
+                                <td>Weight</td>
                                 <td>
-                                    <obs id="post_tx_complication" conceptId="165383"
-                                         answerConceptIds="162816AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,162810AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,5622AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-                                         answerLabels="Cryotherapy,LEEP,Others" style="dropdown" />
-                                </td>
-                                <td>
-                                    <table id="tbl-other-tx-complication">
-                                        <tr>
-                                            <td>Explain:
-                                                <obs id="other-tx-complication" conceptId="163042AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" cols="20"/>
-                                            </td>
-                                        </tr>
-                                    </table>
+                                    <recentObs conceptId="5089AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"/>
                                 </td>
                             </tr>
+                            <tr>
+                                <td>Height</td>
+                                <td>
+                                    <recentObs conceptId="5090AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"/>
+                                </td>
+                            </tr>
+                            <includeIf velocityTest="$patient.age &gt; 14">
+                                <tr>
+                                    <td>BMI</td>
+                                    <td><span id="recent-calculated-bmi"></span></td>
+                                </tr>
+                            </includeIf>
+                            <tr>
+                                <td>MUAC</td>
+                                <td>
+                                    <obs conceptId="1343AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"/>
+                                </td>
+                                <td>
+                                    <recentObs conceptId="1343AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"/>
+                                </td>
+                            </tr>
+                            <includeIf velocityTest="($patient.gender == 'F') &amp;&amp; ($patient.age &gt; 8) &amp;&amp; ($patient.age &lt; 15)">
+                                <tr id="hpv-vaccine">
+                                    <td>Client Vaccinated against HPV? </td>
+                                    <td>  <obs  align="right" conceptId="160325AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+                                                style="radio"
+                                                answerConceptIds="1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+                                                answerLabels="Yes,No"/>
+                                    </td>
+                                </tr>
+                            </includeIf>
                         </table>
                     </td>
-                </tr>
+                </fieldset>
+
+                <!--DM/HTN Screening-->
+                <fieldset>
+                    <legend>DM/HTN Screening</legend>
                 <tr>
-                    <td>Screening method</td>
+                    <td>Has patient been screened for DM/HTN</td>
                     <td>
-                        <obs id="screening_method" conceptId="163589AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-                             answerConceptIds="164805AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,164977,160705AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,159859AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-                             answerLabels="Blood Pressure,Blood Sugar (RBS),Blood Sugar (FBS),HPV Test" style="dropdown" />
+                        <obs id="screening_method" conceptId="23c11489-c169-4757-973a-f826894db7c1"
+                             answerConceptIds="1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+                             answerLabels="Yes,No" style="radio" required="true"/>
                     </td>
                     <td>
                         <ifMode mode="VIEW" include="false">
                             <table class="simple-table" style="width: 100%">
-                                <tr id="tr_via_screening_result">
+                                <tr id="tr_blood_pressure_screening_result">
                                     <td>Blood Pressure</td>
                                     <td>
-                                        <obs id="via_screening_result" conceptId="164934"
-                                             answerConceptIds="664AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,703AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-                                             answerLabels="Normal,Hypertensive"
+                                        <obs id="blood_pressure_screening_result" conceptId="167546"
+                                             answerConceptIds="135576AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,1115AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,117399AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+                                             ,07264ab3-7e52-4aab-af6c-ab1811f117b1,1c423f81-1383-4e0f-ae70-ede88f9a8d6e,4e2d3ae4-fc45-4d63-abd7-f6847d59897b"
+                                             answerLabels="Low BP (SBP less than 80 DBP less than 60),Normal (SBP less than 120 DBP less than 80,Elevated (SBP 120-129 DBP less than 80)
+                                             ,Stage 1 HTN (SBP 130-139 DBP 80-89),Stage 2 HTN (SBP above 140 DBP above 90),HTN Emergency (SBP above 180 DBP above 120)"
                                              style="dropdown" />
                                     </td>
                                 </tr>
-                                <tr id="tr_vili_screening_result">
+                                <tr id="tr_rbs_screening_result">
                                     <td>Blood Sugar (RBS)</td>
                                     <td>
-                                        <obs id="vili_screening_result" conceptId="164934"
-                                             answerConceptIds="664AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,703AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,159008AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-                                             answerLabels="Low,Normal,High"
+                                        <obs id="rbs_screening_result" conceptId="167547"
+                                             answerConceptIds="1115AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,138291AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+,119481AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+                                             answerLabels="Normal (3.9 - 7.7 mmol/l),Elevated (7.7 - 11.1 mmol/l),Diabetic (above 11.1 mmol/l)"
                                              style="dropdown" />
                                     </td>
                                 </tr>
-                                <tr id="tr_colposcopy_screening_result">
+                                <tr id="tr_fbs_screening_result">
                                     <td>Blood Sugar (FBS)</td>
                                     <td>
-                                        <obs id="colposcopy_screening_result" conceptId="164934"
-                                             answerConceptIds="1115AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,1116AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,159008AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-                                             answerLabels="Low,Normal,High"
+                                        <obs id="fbs_screening_result" conceptId="167548"
+                                             answerConceptIds="1115AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,137754AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,119481AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+                                             answerLabels="Normal (3.9 - 5.6 mmol/l),Impaired (5.7 - 6.9 mmol/l), Diabetic (above 7 mmol/l)"
                                              style="dropdown" />
-                                    </td>
-                                </tr>
-
-                                <tr id="tr_hpv_screening_result">
-                                    <td>HPV Screening result</td>
-                                    <td>
-                                        <obs id="hpv_screening_result" conceptId="164934"
-                                             answerConceptIds="703AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,664AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,159393AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-                                             answerLabels="Positive,Negative,Presumed Cancer" style="dropdown" />
                                     </td>
                                 </tr>
                             </table>
@@ -567,95 +467,175 @@
                                 <tr>
                                     <td>Screening result</td>
                                     <td>
-                                    <td>
-                                        <obs id="via_screening_result" conceptId="164934"
-                                             answerConceptIds="664AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,703AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,159008AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,1115AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,145808AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,145805AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,155424AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,159393AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,5622AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-                                             answerLabels="Negative,Positive,Suspicious for cancer,Normal,Low grade lesion,High grade lesion,Invasive Cancer,Presumed Cancer,Other"
+                                        <obs id="blood_pressure_screening_result" conceptId="165583"
+                                             answerConceptIds="1115AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,1408AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+                                             answerLabels="Normal,High"
                                              style="dropdown" />
                                     </td>
-                    </td>
-                </tr>
-            </table>
+                                </tr>
+                            </table>
             </ifMode>
             </td>
             </tr>
+                </fieldset>
+
+                <!--Chronic Illnesses and Cormobidities-->
+                <fieldset>
+                    <legend>Chronic Illnesses and Cormobidities</legend>
+                    <table class="simple-table">
+                        <div>
+                            Client has any chronic illnesse(s)? &#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                            <obs id="chronic-illness" conceptId="162747AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+                                 answerConceptIds="1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+                                 style="radio" answerLabels="Yes,No"
+                            />
+                            <span style="color:red;"><strong>*</strong></span>
+                        </div>
+                        <table id="tbl-chronic-illness">
+                            <tr>
+                                <th style="color: #888">Illness</th>
+                                <th style="color: #888; text-align: center">Onset Date</th>
+                                <th style="color: #888">Drug</th>
+                                <th style="color: #888; text-align: center">Dose</th>
+                                <th style="color: #888; text-align: center">Units</th>
+                                <th style="color: #888; text-align: center">Frequency</th>
+                                <th style="color: #888; text-align: center">Duration</th>
+                                <th style="color: #888; text-align: center">Duration units</th>
+                            </tr>
+                            <repeat>
+                                <template>
+                                    <obsgroup groupingConceptId="159392AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA">
+                                        <tr>
+                                            <td>
+                                                <obs
+                                                        conceptId="1284AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" class="illness-chronic"
+                                                        answerConceptIds="149019AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,148432AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,153754AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,159351AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,119270AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,120637AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,145438AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,1295AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,120576AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,119692AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,120291AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,119481AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,118631AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,117855AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,117789AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,139071AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,115728AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,117399AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,117321AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,151342AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,133687AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,115115AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,114662AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,117703AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,118976AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+                                                        answerLabels="Alzheimer's Disease and other Dementias,Arthritis,Asthma,Cancer,Cardiovascular diseases,Chronic Hepatitis,Chronic Kidney Disease,Chronic Obstructive Pulmonary Disease(COPD),Chronic Renal Failure,Cystic Fibrosis,Deafness and Hearing impairment,Diabetes,Endometriosis,Epilepsy,Glaucoma,Heart Disease,Hyperlipidaemia,Hypertension,Hypothyroidism,Mental illness,Multiple Sclerosis,Obesity,Osteoporosis,Sickle Cell Anaemia,Thyroid disease"
+                                                        style="dropdown" id="chronic"
+                                                />
+                                            </td>
+                                            <td><obs class="onset-date-chronic-illness" conceptId="159948AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" allowFutureDates="false" /></td>
+                                            <td><obs class= "drug-chronic-illness" conceptId="1282AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" answerClasses="Drug" style="autocomplete" /></td>
+                                            <td><obs class = "dose-chronic-illness" conceptId="1443AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" /></td>
+                                            <td><obs class ="units-chronic-illness" conceptId="1444AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" size="5" /></td>
+                                            <td>
+                                                <obs class="frequency-chronic-illness"
+                                                     conceptId="160855AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+                                                     answerConceptIds="160862AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,160863AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,160864AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,160865AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,160858AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,160866AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,160870AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+                                                     answerLabels="Once daily,Once daily at bedtime,Once daily in the evening,Once daily in the morning,Twice daily,Thrice daily,Four times daily"
+                                                />
+                                            </td>
+                                            <td><obs class="duration-chronic-illness" conceptId="159368AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" /></td>
+                                            <td>
+                                                <obs class="duration-units-illness"
+                                                     conceptId="1732AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+                                                     answerConceptIds="1822AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,1072AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,1073AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,1074AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+                                                     answerLabels="Hours,Days,Weeks,Months" />
+                                            </td>
+                                        </tr>
+                                    </obsgroup>
+                                </template>
+                                <render n="1" concept="Drug"/>
+                                <render n="2" concept="Drug"/>
+                                <render n="3" concept="Drug"/>
+                                <render n="4" concept="Drug"/>
+                                <render n="5" concept="Drug"/>
+                            </repeat>
+                        </table>
+                    </table>
+                </fieldset>
             <tr>
                 <td style="width: 50%;">
                     <table class="right-aligned-first" style="width: 100%;" border="0">
-                        <obsgroup groupingConceptId="374AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA">
+                        <obsgroup groupingConceptId="23c11489-c169-4757-973a-f826894db7c1
+">
                             <tr id="tr_screening_type">
                                 <td>
-                                    Newly Diagnosed
+                                    <strong>1.a Diabetes</strong>
                                 </td>
-                                <td colspan="3">
+                                <td colspan="0">
                                     <div style="float: left; padding-right: 50px">
 
-                                        <obs conceptId="374AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" answerConceptId="5245AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" answerLabel="New on Hypertension" style="checkbox" /><br />
-                                        <obs conceptId="374AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" answerConceptId="5245AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" answerLabel="New on Diabetes" style="checkbox" /><br />
+                                        <obs id="screening_result" conceptId ="77c2fa36-e080-4b60-9d8b-24c4fd494024"
+                                             answerConceptIds="6b4ae0cf-c88e-4649-b713-da9b17219dbb, ea52032b-ebd7-4aa3-b06c-82e608fe9790"
+                                             answerLabels="New DM Patient, Known DM Patient" style="dropdown" />
 
                                     </div>
+
+                                <td>Date of Diagnosis</td>
+                                <td>
+                                    <obs id="diagnosis" conceptId="159948AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" allowFutureDates="false" />
+
+                                </td>
+
                                 </td>
                             </tr>
+            <tr id="tr_screening_type">
+                <td>
+                   <strong> 1.b Hypertension</strong>
+                </td>
+                <td colspan="0">
+                    <div style="float: left; padding-right: 50px">
+
+                        <obs conceptId="58b01bbf-d28d-4129-99a2-8f1f8ea6935a"
+                             answerConceptIds="333a7e76-7741-4c09-bdba-332d0b09ebf4, 65ad8fb6-4ad9-4c72-8417-9aed72aa8ee7"
+                             answerLabels="New HTN Patient, Known HTN Patient" style="dropdown" />
+
+                    </div>
+
+                <td>Date of Diagnosis</td>
+                <td>
+                    <obs id="diagnosis" conceptId="159948AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" allowFutureDates="false" />
+
+                </td>
+
+                </td>
+            </tr>
                         </obsgroup>
                     </table>
                 </td>
-                <td>Treatment today</td>
-                <td>
-                    <obs id="treatment" conceptId="165266"
-                         answerConceptIds=""
-                         answerLabels=""
-                         style="dropdown" required="true"/>
+            </tr>
 
-                </td>
-                <td>
-                    <table id="tbl-other-treatment">
-                        <tr>
-                            <td>Explain:
-                                <obs id="other-tx" conceptId="160632AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" cols="20"/>
-                            </td>
-                        </tr>
-                    </table>
-                </td>
-            </tr>
-            <tr>
-                <td>Referred out</td>
-                <td>
-                    <obs id="referred_out" conceptId="165267"
-                         answerConceptIds="1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-                         answerLabels="Yes, No" style="radio" />
-                </td>
-                <td>
-                    <table class="simple-table" style="width: 100%" id="t_referred_out">
-                        <tr>
-                            <td>Referred out to</td>
-                            <td>
-                                <obs id="referred_to" conceptId="165268" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Referral reason</td>
-                            <td>
-                                <obs id="referral_reason" conceptId="1887AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-                                     answerConceptIds="165388,132948AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,159008AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,5622AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-                                     answerLabels="Site does not have cryotherapy machine,Large lesion, Suspect cancer,Other gynaecological problem"
-                                     style="dropdown" />
-                            </td>
-                        </tr>
-                    </table>
-                </td>
-            </tr>
-            <tr>
-                <td>Next appointment date</td>
-                <td>
-                    <obs id="appointment" conceptId="5096AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" allowFutureDates="true" />
-                </td>
-                <td></td>
-            </tr>
+            </table>
+        </fieldset>
+        <!--Appointments-->
+        <fieldset>
+            <legend>Next appointment</legend>
+            <table class="simple-table">
+                <tr>
+                    <td> <b>Client given next appointment</b> </td>
+                    <td> <b>Appointment Date</b> </td>
+                    <td> <b>Reason for failure <br /> to give appointment </b> </td>
+                    <td> <b>Clinical Notes</b> </td>
+                </tr>
+                <tr>
+                    <td>
+                        <obs conceptId="165353" id="tca-given"
+                             answerConceptIds="1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+                             answerLabel="Yes,No"
+                             style="radio" required="true"/>
+                    </td>
+                    <td>
+                        <!-- Appointment date -->
+                        <obs conceptId="5096AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" id="tca-date" allowFutureDates="true"/>
+                    </td>
+                    <td>
+                        <!-- Reason for not giving appointment date -->
+                        <obs conceptId="165354" id="reason-tca-date"
+                             answerConceptIds="159492AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,159836AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+                             answerLabel="Intention to transfer out,Discontinue" answerSeparator="&lt;br /&gt;"
+                             style="radio"/>
+                    </td>
+                    <td>
+                        <obs conceptId="163042AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" id="clinical-notes" />
+                    </td>
+                </tr>
             </table>
         </fieldset>
     </div>
     <div class="ke-form-footer">
         <submit />
     </div>
+    </body>
 </htmlform>
 
