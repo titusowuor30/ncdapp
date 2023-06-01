@@ -3,7 +3,7 @@ ${NCDAPP}
 
 Description
 -----------
-This is a very basic module which can be used as a starting point in creating a new module.
+A module used in KenyaEMR to manage DM/HTN patients.
 
 Building from Source
 --------------------
